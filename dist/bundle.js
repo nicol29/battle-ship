@@ -1,0 +1,1 @@
+(()=>{"use strict";let t=function(t,n){let i=0,u=!1;return{shipType:"Tug Boat",shipLength:2,hitAmount:i,sunk:u,hit:function(){i++},isSunk:function(){2===i&&(u=!0)}}}();console.log(t)})();
