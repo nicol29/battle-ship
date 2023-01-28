@@ -12,12 +12,20 @@ let win = false;
 
 
 let playerGameboard = Gameboard('Player');
+let AIGameboard = Gameboard('AI');
 
-let carrier = Ship('Aircraft Carrier', 5);
-let destroyer = Ship('Destroyer War Ship', 4);
-let cruiser = Ship('Cruiser', 3);
-let submarine = Ship('Submarine', 3);
-let tugboat = Ship('Tug Boat', 2);
+let playerCarrier = Ship('Aircraft Carrier', 5);
+let playerDestroyer = Ship('Destroyer War Ship', 4);
+let playerCruiser = Ship('Cruiser', 3);
+let playerSubmarine = Ship('Submarine', 3);
+let playerTugboat = Ship('Tug Boat', 2);
+
+let aiCarrier = Ship('Aircraft Carrier', 5);
+let aiDestroyer = Ship('Destroyer War Ship', 4);
+let aiCruiser = Ship('Cruiser', 3);
+let aiSubmarine = Ship('Submarine', 3);
+let aiTugboat = Ship('Tug Boat', 2);
+
 
 let DOM = (() => {
   let playerGridContainer = document.querySelector('.player-grid');
@@ -65,16 +73,27 @@ let DOM = (() => {
 })()
 
 
-let allShipsToPlace = [
-  carrier,
-  destroyer,
-  cruiser,
-  submarine,
-  tugboat
+let playerShipsToPlace = [
+  playerCarrier,
+  playerDestroyer,
+  playerCruiser,
+  playerSubmarine,
+  playerTugboat
 ]
 
+let aiShipsToPlace = [
+  aiCarrier,
+  aiDestroyer,
+  aiCruiser,
+  aiSubmarine,
+  aiTugboat
+]
+
+AIGameboard.placeAIShips(aiShipsToPlace);
 playerGameboard.receiveAttack();
 DOM.drawGameboards();
+
+console.log(AIGameboard.getGameGrid());
 
 
 let playerGrid = document.querySelector('.player-grid');
@@ -84,10 +103,10 @@ playerGrid.addEventListener('click', (e) => {
   let x = e.target.getAttribute('x');
   let y = e.target.getAttribute('y')
 
-  let placeSuccessful = playerGameboard.placeShip(allShipsToPlace, parseInt(x), parseInt(y));
+  let placeSuccessful = playerGameboard.placeShips(playerShipsToPlace, parseInt(x), parseInt(y));
   if(placeSuccessful) {
-    DOM.placeShipsRender(e.target, allShipsToPlace[0].shipLength);
-    allShipsToPlace.shift();
+    DOM.placeShipsRender(e.target, playerShipsToPlace[0].shipLength);
+    playerShipsToPlace.shift();
   }
 })
 

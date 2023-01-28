@@ -15,7 +15,7 @@ export function Gameboard (entity) {
 
   let getGameGrid = () => gameGrid;
 
-  function placeShip (ships, coordX, coordY) {
+  function placeShips (ships, coordX, coordY) {
     let ship;
     
     if(ships.length > 0) {
@@ -35,12 +35,42 @@ export function Gameboard (entity) {
     return false;
   }
 
+  function placeAIShips (shipsList) {
+    let randomCoords = [];
+    let appropriateCoords = false;
+
+    // while(randomCoords.length < 5){
+
+    // }
+    shipsList.forEach((ship, index) => {
+      let randXCoord;
+      let randYCoord;
+      let placed = false;
+
+      while(!placed){
+        randXCoord = Math.floor(Math.random() * (10 - ship.shipLength));
+        randYCoord = Math.floor(Math.random() * 10);
+
+        for(let i = randXCoord; i < randXCoord + ship.shipLength; i++){
+          if(gameGrid[randYCoord][i] === '*'){
+            break
+          }
+          if(i === (randXCoord + ship.shipLength) - 1) placed = true;
+        }
+      }
+      for(let i = randXCoord; i < randXCoord + ship.shipLength; i++){
+        gameGrid[randYCoord][i] = '*'
+      }
+    })
+  }
+
   function receiveAttack () {
     
   }
 
   return {
-    placeShip,
+    placeShips,
+    placeAIShips,
     getGameGrid,
     receiveAttack
   }
