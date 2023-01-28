@@ -10,6 +10,8 @@ export function Ship (type, length) {
 
   function isSunk() {
     if(hitAmount === shipLength) sunk = true;
+
+    return sunk;
   }
 
   return { 

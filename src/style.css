@@ -1,0 +1,27 @@
+.heading {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+h1 {
+  font-size: 3rem;
+}
+
+.grid-container {
+  display: flex;
+  justify-content: space-around;
+}
+
+.grid {
+  border: 1px solid black;
+  width: 200px;
+  height: 200px;
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  grid-template-rows: repeat(10, 1fr);
+}
+
+.grid div {
+  border: .5px solid black;
+}
