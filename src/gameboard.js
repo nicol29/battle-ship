@@ -15,7 +15,7 @@ export function Gameboard (entity) {
 
   let getGameGrid = () => gameGrid;
 
-  function placeShips (ships, coordX, coordY) {
+  function placeShips (ships, xCoord, yCoord) {
     let ship;
     
     if(ships.length > 0) {
@@ -24,11 +24,11 @@ export function Gameboard (entity) {
       return;
     }
 
-    let maxIndexLength = (coordX + ship.shipLength) - 1;
+    let maxIndexLength = (xCoord + ship.shipLength) - 1;
 
     if(maxIndexLength <= 10){
-      for(let i = coordX - 1; i < maxIndexLength; i++){
-        gameGrid[coordY - 1][i] = '*'
+      for(let i = xCoord - 1; i < maxIndexLength; i++){
+        gameGrid[yCoord - 1][i] = ship;
       }
       return true;
     }
@@ -36,13 +36,7 @@ export function Gameboard (entity) {
   }
 
   function placeAIShips (shipsList) {
-    let randomCoords = [];
-    let appropriateCoords = false;
-
-    // while(randomCoords.length < 5){
-
-    // }
-    shipsList.forEach((ship, index) => {
+    shipsList.forEach((ship) => {
       let randXCoord;
       let randYCoord;
       let placed = false;
@@ -59,13 +53,22 @@ export function Gameboard (entity) {
         }
       }
       for(let i = randXCoord; i < randXCoord + ship.shipLength; i++){
-        gameGrid[randYCoord][i] = '*'
+        gameGrid[randYCoord][i] = ship;
       }
     })
   }
 
-  function receiveAttack () {
-    
+  function receiveAttack (xCoord, yCoord) {
+    let pickedSquare = gameGrid[yCoord - 1][xCoord - 1];
+
+    if(typeof pickedSquare === 'object'){
+      console.log('ship hit!');
+      pickedSquare.hit();
+      if(pickedSquare.isSunk()) console.log('You sank the ship!');
+      gameGrid[yCoord - 1][xCoord - 1] = 'X';
+    } else{
+      gameGrid[yCoord - 1][xCoord - 1] = '1';
+    }
   }
 
   return {

@@ -10,9 +10,11 @@ export function Ship (type, length) {
 
   function isSunk() {
     if(hitAmount === shipLength) sunk = true;
-
+    
     return sunk;
   }
+
+  let getHitAmount = () => hitAmount;
 
   return { 
     shipType,
@@ -20,6 +22,7 @@ export function Ship (type, length) {
     hitAmount,
     sunk,
     hit,
-    isSunk
+    isSunk,
+    getHitAmount
   }
 };

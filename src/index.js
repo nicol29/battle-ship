@@ -12,7 +12,7 @@ let win = false;
 
 
 let playerGameboard = Gameboard('Player');
-let AIGameboard = Gameboard('AI');
+let aiGameboard = Gameboard('AI');
 
 let playerCarrier = Ship('Aircraft Carrier', 5);
 let playerDestroyer = Ship('Destroyer War Ship', 4);
@@ -51,8 +51,21 @@ let DOM = (() => {
       playerGridContainer.appendChild(square);
     }
 
+    x = 1;
+    y = 0;
+
     for(let i = 0; i < 100; i++){
       let square = document.createElement('div');
+
+      x++;
+
+      if(i % 10 === 0) {
+        y++;
+        x = 1;
+      }
+
+      square.setAttribute('x', x);
+      square.setAttribute('y', y);
       computerGridContainer.appendChild(square);
     }
   }
@@ -66,9 +79,12 @@ let DOM = (() => {
     }
   }
 
+  let returnComputerGrid = () => computerGridContainer;
+
   return  {
     drawGameboards,
-    placeShipsRender
+    placeShipsRender, 
+    returnComputerGrid
   }
 })()
 
@@ -89,40 +105,32 @@ let aiShipsToPlace = [
   aiTugboat
 ]
 
-AIGameboard.placeAIShips(aiShipsToPlace);
-playerGameboard.receiveAttack();
+aiGameboard.placeAIShips(aiShipsToPlace);
 DOM.drawGameboards();
 
-console.log(AIGameboard.getGameGrid());
+console.log(aiGameboard.getGameGrid());
 
 
 let playerGrid = document.querySelector('.player-grid');
-
+let computerGrid = document.querySelector('.computer-grid');
 
 playerGrid.addEventListener('click', (e) => {
   let x = e.target.getAttribute('x');
-  let y = e.target.getAttribute('y')
+  let y = e.target.getAttribute('y');
 
   let placeSuccessful = playerGameboard.placeShips(playerShipsToPlace, parseInt(x), parseInt(y));
   if(placeSuccessful) {
     DOM.placeShipsRender(e.target, playerShipsToPlace[0].shipLength);
     playerShipsToPlace.shift();
+    console.log(playerGameboard.getGameGrid());
   }
 })
 
+computerGrid.addEventListener('click', (e) => {
+  let x = parseInt(e.target.getAttribute('x'));
+  let y = parseInt(e.target.getAttribute('y'));
+  console.log(x, y);
+  aiGameboard.receiveAttack(x, y);
+  console.log(aiGameboard.getGameGrid());
+})
 
-
-
-
-// let x = 1;
-//     let y = 11;
-
-//     for(let i = 0; i < 100; i++){
-//       let square = document.createElement('div');
-
-//       x++;
-
-//       if(i % 10 === 0) {
-//         y--;
-//         x = 1;
-//       }
