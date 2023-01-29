@@ -79,12 +79,29 @@ let DOM = (() => {
     }
   }
 
+  function renderGameboard (gameboard) {
+    let containerChildren = computerGridContainer.children;
+    let indexForContainer = 0;
+
+    for(let i = 0; i < 10; i++){
+      for(let j = 0; j < 10; j++){
+        if(gameboard[i][j] === 'X'){
+          containerChildren[indexForContainer].style.backgroundColor = 'red';
+        } else if(gameboard[i][j] === 1) {
+          containerChildren[indexForContainer].style.backgroundColor = 'green';
+        }
+        indexForContainer++;
+      }
+    }
+  }
+
   let returnComputerGrid = () => computerGridContainer;
 
   return  {
     drawGameboards,
     placeShipsRender, 
-    returnComputerGrid
+    returnComputerGrid,
+    renderGameboard
   }
 })()
 
@@ -129,8 +146,9 @@ playerGrid.addEventListener('click', (e) => {
 computerGrid.addEventListener('click', (e) => {
   let x = parseInt(e.target.getAttribute('x'));
   let y = parseInt(e.target.getAttribute('y'));
-  console.log(x, y);
+  
   aiGameboard.receiveAttack(x, y);
   console.log(aiGameboard.getGameGrid());
+  DOM.renderGameboard(aiGameboard.getGameGrid());
 })
 

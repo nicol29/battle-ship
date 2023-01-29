@@ -67,7 +67,7 @@ export function Gameboard (entity) {
       if(pickedSquare.isSunk()) console.log('You sank the ship!');
       gameGrid[yCoord - 1][xCoord - 1] = 'X';
     } else{
-      gameGrid[yCoord - 1][xCoord - 1] = '1';
+      gameGrid[yCoord - 1][xCoord - 1] = 1;
     }
   }
 
