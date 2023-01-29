@@ -71,10 +71,28 @@ export function Gameboard (entity) {
     }
   }
 
+  function pickRandomSquare () {
+    let isSuitable = false;
+    let randXCoord = 4;
+    let randYCoord = 5;
+
+    while (!isSuitable) {
+      randXCoord = Math.floor(Math.random() * 10);
+      randYCoord = Math.floor(Math.random() * 10);
+
+      if(gameGrid[randYCoord][randXCoord] === 0 || typeof gameGrid[randYCoord][randXCoord] === 'object'){
+        isSuitable = true
+      }
+    }
+
+    return [randXCoord + 1, randYCoord + 1];
+  }
+
   return {
     placeShips,
     placeAIShips,
     getGameGrid,
-    receiveAttack
+    receiveAttack,
+    pickRandomSquare
   }
 }

@@ -150,5 +150,7 @@ computerGrid.addEventListener('click', (e) => {
   aiGameboard.receiveAttack(x, y);
   console.log(aiGameboard.getGameGrid());
   DOM.renderGameboard(aiGameboard.getGameGrid());
+  playerGameboard.receiveAttack(...playerGameboard.pickRandomSquare());
+  console.log(playerGameboard.getGameGrid());
 })
 
